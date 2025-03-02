@@ -16,6 +16,18 @@
   --font-mono: var(--font-jetbrains-mono), 'Courier New', monospace;
 }
 
+.dark {
+  --color-text: #f1f5f9;
+  --color-text-light: #94a3b8;
+  --color-bg: #0f172a;
+  --color-bg-alt: #1e293b;
+  --color-border: #334155;
+  --color-card-bg: #1e293b;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -374,6 +386,10 @@ a {
   box-shadow: var(--shadow-sm);
 }
 
+.dark .header.scrolled {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
 .header-inner {
   display: flex;
   align-items: center;
@@ -397,6 +413,10 @@ a {
   width: 40px;
   height: 40px;
   margin-right: 0.5rem;
+}
+
+.dark .logo-container img {
+  filter: invert(1);
 }
 
 .logo-text {
@@ -461,8 +481,12 @@ a {
   font-size: 0.75rem;
 }
 
+.dark .tech-tag {
+  background-color: #334155;
+}
+
 .icon-link {
-  color: #334155;
+  color: var(--color-text-light);
   transition: color 200ms;
 }
 
