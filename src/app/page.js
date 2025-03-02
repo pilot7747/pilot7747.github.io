@@ -318,7 +318,7 @@ export default async function Home() {
                 I'm always open to discussing new projects, opportunities, or partnerships. Feel free to reach out!
               </p>
               
-              <div className="space-y-4">
+              <div className="space-y-2">
                 <a 
                   href="mailto:nikita.pavlichenko@gmail.com" 
                   className="contact-link"

@@ -19,6 +19,15 @@ export const metadata = {
   title: 'Nikita Pavlichenko - AI & ML Engineer',
   description: 'Personal website and portfolio of Nikita Pavlichenko, a Senior Machine Learning Engineer with expertise in LLMs, NLP, and crowdsourcing.',
   metadataBase: new URL('https://pavlichenko.info'),
+  icons: {
+    icon: '/content/img/icon.svg',
+    shortcut: '/content/img/icon.svg',
+    apple: '/content/img/icon.svg',
+    other: {
+      rel: 'apple-touch-icon',
+      url: '/content/img/icon.svg',
+    },
+  },
   openGraph: {
     title: 'Nikita Pavlichenko - AI & ML Engineer',
     description: 'Personal website and portfolio of Nikita Pavlichenko, a Senior Machine Learning Engineer with expertise in LLMs, NLP, and crowdsourcing.',

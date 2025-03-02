@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { FaGithub, FaLinkedin, FaEnvelope, FaTwitter } from 'react-icons/fa';
+import { SiGooglescholar } from 'react-icons/si';
 
 export default function Footer() {
   return (
@@ -40,6 +41,15 @@ export default function Footer() {
               aria-label="Email"
             >
               <FaEnvelope className="w-6 h-6" />
+            </a>
+            <a 
+              href="https://scholar.google.com/citations?user=2mSLYhcAAAAJ" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-muted icon-link"
+              aria-label="Google Scholar"
+            >
+              <SiGooglescholar className="w-6 h-6" />
             </a>
           </div>
         </div>
