@@ -48,7 +48,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28">
+      <section className="hero-section relative pb-20">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute hero-blur" style={{ top: "-10rem", left: "-10rem" }}></div>
           <div className="absolute hero-blur" style={{ bottom: "-10rem", right: "-10rem" }}></div>
