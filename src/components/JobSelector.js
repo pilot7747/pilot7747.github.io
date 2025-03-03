@@ -25,6 +25,8 @@ export default function JobSelector({ jobs }) {
                   width={24}
                   height={24}
                   className="job-tab-logo"
+                  style={{ objectFit: 'contain' }}
+                  unoptimized
                 />
               </div>
             )}
@@ -55,9 +57,11 @@ export default function JobSelector({ jobs }) {
                 <Image
                   src={jobs[selectedJobIndex].logo}
                   alt={`${jobs[selectedJobIndex].company} logo`}
-                  width={60}
-                  height={60}
+                  width={40}
+                  height={40}
                   className="company-logo"
+                  style={{ objectFit: 'contain' }}
+                  unoptimized
                 />
               </div>
             )}
