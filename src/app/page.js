@@ -48,18 +48,18 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="hero-section relative pb-20">
+      <section className="hero-section">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute hero-blur" style={{ top: "-10rem", left: "-10rem" }}></div>
           <div className="absolute hero-blur" style={{ bottom: "-10rem", right: "-10rem" }}></div>
         </div>
-        <div className="container">
+        <div className="container overflow-hidden">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-12 md:mb-0 md:max-w-2xl">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+            <div className="w-full mb-12 md:mb-0 md:max-w-2xl">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 break-words">
                 Nikita Pavlichenko
               </h1>
-              <h2 className="text-2xl md:text-3xl mb-6 text-muted">
+              <h2 className="text-2xl md:text-3xl mb-6 text-muted break-words">
                 Senior Machine Learning Engineer
               </h2>
               <p className="text-lg leading-relaxed mb-8 text-muted">
@@ -67,14 +67,14 @@ export default async function Home() {
                 Natural Language Processing, and crowdsourcing technologies. Currently building
                 advanced code completion models at JetBrains AI.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-2 sm:gap-4 justify-center md:justify-start w-full max-w-full overflow-hidden">
                 <a 
                   href="https://github.com/pilot7747" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary"
                 >
-                  <FaGithub style={{ marginRight: "0.5rem" }} /> GitHub
+                  <FaGithub size={16} /> GitHub
                 </a>
                 <a 
                   href="https://www.linkedin.com/in/nikita-pavlichenko/" 
@@ -82,7 +82,7 @@ export default async function Home() {
                   rel="noopener noreferrer"
                   className="btn btn-outline"
                 >
-                  <FaLinkedin style={{ marginRight: "0.5rem" }} /> LinkedIn
+                  <FaLinkedin size={16} /> LinkedIn
                 </a>
                 <a 
                   href="https://scholar.google.com/citations?user=2mSLYhcAAAAJ" 
@@ -90,7 +90,7 @@ export default async function Home() {
                   rel="noopener noreferrer"
                   className="btn btn-outline"
                 >
-                  <SiGooglescholar style={{ marginRight: "0.5rem" }} /> Google Scholar
+                  <SiGooglescholar size={16} /> Scholar
                 </a>
                 <a 
                   href="/CV.pdf" 
@@ -98,18 +98,18 @@ export default async function Home() {
                   rel="noopener noreferrer"
                   className="btn btn-outline"
                 >
-                  <FaFileAlt style={{ marginRight: "0.5rem" }} /> Resume
+                  <FaFileAlt size={16} /> Resume
                 </a>
               </div>
             </div>
             <div className="relative flex-shrink-0">
-              <div className="w-64 h-64 md:w-80 md:h-80 profile-image">
+              <div className="w-64 h-64 md:w-80 md:h-80 profile-image relative">
                 <Image
                   src="/content/img/me.jpg"
                   alt="Nikita Pavlichenko"
-                  width={320}
-                  height={320}
-                  className="object-cover w-full h-full"
+                  fill
+                  sizes="(max-width: 768px) 256px, 320px"
+                  className="object-cover rounded-full"
                   priority
                 />
               </div>
@@ -159,7 +159,7 @@ export default async function Home() {
                     />
                     
                     {project.tech && (
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="tech-tags-container">
                         {project.tech.map((tech) => (
                           <span 
                             key={tech}
@@ -187,7 +187,7 @@ export default async function Home() {
                     />
                     
                     {project.tech && (
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="tech-tags-container">
                         {project.tech.map((tech) => (
                           <span 
                             key={tech}

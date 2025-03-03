@@ -20,6 +20,12 @@ export const metadata = {
   title: 'Nikita Pavlichenko - AI & ML Engineer',
   description: 'Personal website and portfolio of Nikita Pavlichenko, a Senior Machine Learning Engineer with expertise in LLMs, NLP, and crowdsourcing.',
   metadataBase: new URL('https://pavlichenko.info'),
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
   icons: {
     icon: '/content/img/icon.svg',
     shortcut: '/content/img/icon.svg',
@@ -51,10 +57,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+      </head>
+      <body className="overflow-x-hidden">
         <ThemeProvider>
           <Header />
-          <main className="flex flex-col">
+          <main className="flex flex-col w-full overflow-x-hidden">
             {children}
           </main>
           <Footer />

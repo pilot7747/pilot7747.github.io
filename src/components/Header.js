@@ -78,7 +78,7 @@ export default function Header() {
             {darkMode ? <FaSun className="w-5 h-5" /> : <FaMoon className="w-5 h-5" />}
           </button>
           <button 
-            className="mobile-menu-button"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -101,7 +101,7 @@ export default function Header() {
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
                   strokeWidth="2" 
-                  d="M4 6h16M4 12h16m-7 6h7"
+                  d="M4 6h16M4 12h16M4 18h16"
                 />
               )}
             </svg>
@@ -116,7 +116,7 @@ export default function Header() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="md:hidden shadow-lg bg-white dark:bg-gray-800 w-full"
+          className="md:hidden shadow-lg bg-white dark:bg-gray-800 w-full overflow-x-hidden fixed top-[70px] left-0 right-0 border-t border-gray-200 dark:border-gray-700"
         >
           <div className="container py-4">
             <nav className="flex flex-col space-y-4">
@@ -124,7 +124,7 @@ export default function Header() {
                 <Link 
                   key={item.name}
                   href={item.href}
-                  className="font-medium py-2"
+                  className="font-medium py-2 whitespace-normal hover:text-primary-500"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
