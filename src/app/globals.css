@@ -2143,4 +2143,14 @@ main {
     background-color: rgba(56, 189, 248, 0.05);
     border-color: rgba(56, 189, 248, 0.2);
   }
+}
+
+/* Add specific styles for Toloka logo in dark mode */
+.dark img[src*="toloka"] {
+  filter: invert(1) brightness(1.5);
+}
+
+.dark .job-tab:hover img[src*="toloka"],
+.dark .job-tab.active img[src*="toloka"] {
+  filter: invert(1) brightness(1.5);
 } 
