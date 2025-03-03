@@ -470,6 +470,8 @@ a {
   position: relative;
   padding: 4rem 0;
   overflow: hidden;
+  padding-top: calc(var(--header-height) + var(--safe-area-inset-top) + 2rem);
+  padding-bottom: 2rem;
 }
 
 .hero-blur {
@@ -498,6 +500,10 @@ a {
   .profile-image {
     width: 320px;
     height: 320px;
+  }
+  .hero-section {
+    padding-top: calc(var(--header-height) + var(--safe-area-inset-top) + 4rem);
+    padding-bottom: 3rem;
   }
 }
 
@@ -888,19 +894,6 @@ a[href*="website"] svg {
 /* Add padding to main content to prevent header overlap */
 main {
   padding-top: 0;
-}
-
-/* Update hero section padding */
-.hero-section {
-  padding-top: calc(var(--header-height) + var(--safe-area-inset-top) + 2rem);
-  padding-bottom: 5rem;
-}
-
-@media (min-width: 768px) {
-  .hero-section {
-    padding-top: calc(var(--header-height) + var(--safe-area-inset-top) + 4rem);
-    padding-bottom: 7rem;
-  }
 }
 
 /* Tech tags container */
