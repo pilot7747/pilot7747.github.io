@@ -119,7 +119,7 @@ export default async function Home() {
       {/* Experience Section */}
       <section id="experience" className="py-20 bg-alternate">
         <div className="container">
-          <h2 className="section-heading">Experience</h2>
+          <h2 className="section-heading text-gray-900 dark:text-gray-100">Experience</h2>
           
           <div className="mt-12">
             <JobSelector jobs={jobsWithHtml} />
@@ -130,14 +130,14 @@ export default async function Home() {
       {/* Projects Section */}
       <section id="projects" className="py-20">
         <div className="container">
-          <h2 className="section-heading">Projects</h2>
+          <h2 className="section-heading text-gray-900 dark:text-gray-100">Projects</h2>
           
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             {projectsWithHtml.map((project) => (
               <div key={project.slug} className="publication-card">
-                <div className="card p-6 flex flex-col h-full overflow-hidden">
-                  <h3 className="text-xl font-bold">{project.title}</h3>
-                  <p className="text-sm mt-1 text-muted">
+                <div className="card p-6 flex flex-col h-full overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">{project.title}</h3>
+                  <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
                     {new Date(project.date).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
@@ -145,7 +145,7 @@ export default async function Home() {
                   </p>
                   
                   <div 
-                    className="mt-4 prose prose-sm max-w-none flex-grow"
+                    className="mt-4 prose prose-sm dark:prose-invert max-w-none flex-grow"
                     dangerouslySetInnerHTML={{ __html: project.contentHtml }}
                   />
                   
@@ -154,7 +154,7 @@ export default async function Home() {
                       {project.tech.map((tech) => (
                         <span 
                           key={tech}
-                          className="publication-tag"
+                          className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                         >
                           {tech}
                         </span>
@@ -169,7 +169,7 @@ export default async function Home() {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="icon-link"
+                          className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                           aria-label="GitHub repository"
                         >
                           <FaGithub className="w-5 h-5" />
@@ -182,7 +182,7 @@ export default async function Home() {
                         href={project.external}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="publication-link"
+                        className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
                       >
                         View Project
                       </a>
@@ -198,35 +198,35 @@ export default async function Home() {
       {/* Publications Section */}
       <section id="publications" className="py-20 bg-alternate">
         <div className="container">
-          <h2 className="section-heading">Publications</h2>
+          <h2 className="section-heading text-gray-900 dark:text-gray-100">Publications</h2>
           
           <div className="mt-8 mb-12">
-            <p className="max-w-3xl">
+            <p className="max-w-3xl text-gray-700 dark:text-gray-300">
               My research contributions span multiple domains including machine learning, crowdsourcing, and AI-generated content. 
               You can find my complete publication history on <a href="https://scholar.google.com/citations?user=2mSLYhcAAAAJ" 
-              target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Google Scholar</a>.
+              target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 hover:underline">Google Scholar</a>.
             </p>
           </div>
           
           <div className="mt-8 grid grid-cols-1 gap-8">
             <div className="publication-card">
-              <div className="card p-6 overflow-hidden">
-                <h3 className="text-xl font-bold">Best Prompts for Text-to-Image Models and How to Find Them</h3>
-                <p className="text-sm mt-1 text-muted">SIGIR 2023</p>
-                <p className="mt-4">
+              <div className="card p-6 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Best Prompts for Text-to-Image Models and How to Find Them</h3>
+                <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">SIGIR 2023</p>
+                <p className="mt-4 text-gray-700 dark:text-gray-300">
                   A novel approach for optimizing text prompts for text-to-image generation models using crowdsourcing techniques and evolutionary algorithms.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
-                  <span className="publication-tag">AI</span>
-                  <span className="publication-tag">Generative Models</span>
-                  <span className="publication-tag">Prompting</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">AI</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Generative Models</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Prompting</span>
                 </div>
                 <div className="mt-4">
                   <a 
                     href="https://dl.acm.org/doi/10.1145/3539618.3591909" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="publication-link"
+                    className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
                   >
                     View Publication
                   </a>
@@ -235,23 +235,23 @@ export default async function Home() {
             </div>
 
             <div className="publication-card">
-              <div className="card p-6 overflow-hidden">
-                <h3 className="text-xl font-bold">CrowdSpeech and Vox DIY: Benchmark Dataset for Crowdsourced Audio Transcription</h3>
-                <p className="text-sm mt-1 text-muted">NeurIPS Datasets and Benchmarks 2021</p>
-                <p className="mt-4">
+              <div className="card p-6 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">CrowdSpeech and Vox DIY: Benchmark Dataset for Crowdsourced Audio Transcription</h3>
+                <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">NeurIPS Datasets and Benchmarks 2021</p>
+                <p className="mt-4 text-gray-700 dark:text-gray-300">
                   A benchmark dataset for evaluating crowdsourced audio transcription methods, featuring diverse languages and recording conditions.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
-                  <span className="publication-tag">NLP</span>
-                  <span className="publication-tag">Crowdsourcing</span>
-                  <span className="publication-tag">Datasets</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">NLP</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Crowdsourcing</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Datasets</span>
                 </div>
                 <div className="mt-4">
                   <a 
                     href="https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/a684eceee76fc522773286a895bc8436-Abstract-round1.html" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="publication-link"
+                    className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
                   >
                     View Publication
                   </a>
@@ -260,23 +260,23 @@ export default async function Home() {
             </div>
             
             <div className="publication-card">
-              <div className="card p-6 overflow-hidden">
-                <h3 className="text-xl font-bold">Spherical convolutions on molecular graphs for protein model quality assessment</h3>
-                <p className="text-sm mt-1 text-muted">Machine Learning: Science and Technology 2021</p>
-                <p className="mt-4">
+              <div className="card p-6 overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Spherical convolutions on molecular graphs for protein model quality assessment</h3>
+                <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">Machine Learning: Science and Technology 2021</p>
+                <p className="mt-4 text-gray-700 dark:text-gray-300">
                   A deep learning model operating on molecular graphs (S-GCN) for protein model quality prediction that achieved state-of-the-art results on the CASP MQA challenge.
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
-                  <span className="publication-tag">Graph ML</span>
-                  <span className="publication-tag">Bioinformatics</span>
-                  <span className="publication-tag">GCN</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Graph ML</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Bioinformatics</span>
+                  <span className="publication-tag bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">GCN</span>
                 </div>
                 <div className="mt-4">
                   <a 
                     href="https://iopscience.iop.org/article/10.1088/2632-2153/abf856" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="publication-link"
+                    className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
                   >
                     View Publication
                   </a>
@@ -289,7 +289,7 @@ export default async function Home() {
                 href="https://scholar.google.com/citations?user=2mSLYhcAAAAJ" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="btn btn-outline inline-flex items-center"
+                className="btn btn-outline dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 inline-flex items-center"
               >
                 <SiGooglescholar className="mr-2" /> View All Publications
               </a>
