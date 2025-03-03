@@ -134,95 +134,60 @@ export default async function Home() {
           
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
             {projectsWithHtml.map((project) => (
-              <div key={project.slug} className="card p-6 flex flex-col h-full project-card">
-                {project.external ? (
-                  <a 
-                    href={project.external}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contents" // Makes the link wrapper preserve the original styling
-                  >
-                    <h3 className="text-xl font-bold">{project.title}</h3>
-                    <p className="text-sm mt-1 text-muted">
-                      {new Date(project.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                      })}
-                    </p>
-                    
-                    <div 
-                      className="mt-4 prose prose-sm max-w-none flex-grow"
-                      dangerouslySetInnerHTML={{ __html: project.contentHtml }}
-                    />
-                    
-                    {project.tech && (
-                      <div className="tech-tags-container">
-                        {project.tech.map((tech) => (
-                          <span 
-                            key={tech}
-                            className="tech-tag"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </a>
-                ) : (
-                  <>
-                    <h3 className="text-xl font-bold">{project.title}</h3>
-                    <p className="text-sm mt-1 text-muted">
-                      {new Date(project.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                      })}
-                    </p>
-                    
-                    <div 
-                      className="mt-4 prose prose-sm max-w-none flex-grow"
-                      dangerouslySetInnerHTML={{ __html: project.contentHtml }}
-                    />
-                    
-                    {project.tech && (
-                      <div className="tech-tags-container">
-                        {project.tech.map((tech) => (
-                          <span 
-                            key={tech}
-                            className="tech-tag"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                )}
-                
-                <div className="mt-6 flex space-x-4">
-                  {project.github && (
-                    <a 
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="icon-link"
-                      aria-label="GitHub repository"
-                    >
-                      <FaGithub className="w-5 h-5" />
-                    </a>
+              <div key={project.slug} className="publication-card">
+                <div className="card p-6 flex flex-col h-full overflow-hidden">
+                  <h3 className="text-xl font-bold">{project.title}</h3>
+                  <p className="text-sm mt-1 text-muted">
+                    {new Date(project.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                    })}
+                  </p>
+                  
+                  <div 
+                    className="mt-4 prose prose-sm max-w-none flex-grow"
+                    dangerouslySetInnerHTML={{ __html: project.contentHtml }}
+                  />
+                  
+                  {project.tech && (
+                    <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
+                      {project.tech.map((tech) => (
+                        <span 
+                          key={tech}
+                          className="publication-tag"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   )}
-                  {project.external && (
-                    <a 
-                      href={project.external}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="icon-link"
-                      aria-label="External link"
-                    >
-                      <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  )}
+                  
+                  <div className="mt-4 flex justify-between items-center">
+                    <div className="flex space-x-4">
+                      {project.github && (
+                        <a 
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="icon-link"
+                          aria-label="GitHub repository"
+                        >
+                          <FaGithub className="w-5 h-5" />
+                        </a>
+                      )}
+                    </div>
+                    
+                    {project.external && (
+                      <a 
+                        href={project.external}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="publication-link"
+                      >
+                        View Project
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -245,13 +210,13 @@ export default async function Home() {
           
           <div className="mt-8 grid grid-cols-1 gap-8">
             <div className="publication-card">
-              <div className="card p-6">
+              <div className="card p-6 overflow-hidden">
                 <h3 className="text-xl font-bold">Best Prompts for Text-to-Image Models and How to Find Them</h3>
                 <p className="text-sm mt-1 text-muted">SIGIR 2023</p>
                 <p className="mt-4">
                   A novel approach for optimizing text prompts for text-to-image generation models using crowdsourcing techniques and evolutionary algorithms.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
                   <span className="publication-tag">AI</span>
                   <span className="publication-tag">Generative Models</span>
                   <span className="publication-tag">Prompting</span>
@@ -270,13 +235,13 @@ export default async function Home() {
             </div>
 
             <div className="publication-card">
-              <div className="card p-6">
+              <div className="card p-6 overflow-hidden">
                 <h3 className="text-xl font-bold">CrowdSpeech and Vox DIY: Benchmark Dataset for Crowdsourced Audio Transcription</h3>
                 <p className="text-sm mt-1 text-muted">NeurIPS Datasets and Benchmarks 2021</p>
                 <p className="mt-4">
                   A benchmark dataset for evaluating crowdsourced audio transcription methods, featuring diverse languages and recording conditions.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
                   <span className="publication-tag">NLP</span>
                   <span className="publication-tag">Crowdsourcing</span>
                   <span className="publication-tag">Datasets</span>
@@ -295,13 +260,13 @@ export default async function Home() {
             </div>
             
             <div className="publication-card">
-              <div className="card p-6">
+              <div className="card p-6 overflow-hidden">
                 <h3 className="text-xl font-bold">Spherical convolutions on molecular graphs for protein model quality assessment</h3>
                 <p className="text-sm mt-1 text-muted">Machine Learning: Science and Technology 2021</p>
                 <p className="mt-4">
                   A deep learning model operating on molecular graphs (S-GCN) for protein model quality prediction that achieved state-of-the-art results on the CASP MQA challenge.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2 overflow-hidden">
                   <span className="publication-tag">Graph ML</span>
                   <span className="publication-tag">Bioinformatics</span>
                   <span className="publication-tag">GCN</span>
