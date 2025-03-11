@@ -26,6 +26,7 @@
   "homepage": "https://github.com/pilot7747/pilot7747.github.io#readme",
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.9",
+    "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.20",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.4.7",
