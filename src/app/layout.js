@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ThemeProvider from '@/components/ThemeProvider';
@@ -69,6 +70,7 @@ export default function RootLayout({ children }) {
           </main>
           <Footer />
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
