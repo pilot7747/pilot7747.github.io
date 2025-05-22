@@ -57,7 +57,7 @@ export default async function Home() {
                 Nikita <span className="text-gradient">Pavlichenko</span>
               </h1>
               <h2 className="text-2xl md:text-3xl mb-6 break-words">
-                Senior Machine Learning Engineer
+                Senior Research Engineer
               </h2>
               <p className="text-lg leading-relaxed mb-8">
                 Developing cutting-edge AI applications with expertise in <span className="text-gradient">LLMs</span>,

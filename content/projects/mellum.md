@@ -2,7 +2,7 @@
 date: '2024-10-22'
 title: 'Mellum: JetBrains LLM For Developers'
 github: ''
-external: 'https://blog.jetbrains.com/blog/2024/10/22/introducing-mellum-jetbrains-new-llm-built-for-developers/'
+external: 'https://blog.jetbrains.com/ai/2025/04/mellum-goes-open-source-a-purpose-built-llm-for-developers-now-on-hugging-face/'
 tech:
   - Large Language Models
   - AI Engineering
