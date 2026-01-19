@@ -1,0 +1,46 @@
+---
+title: "Notes on Training Code LLMs"
+date: "2025-01-15"
+description: "Some lessons learned from training billion-parameter code models. Data, architecture, and things that break."
+tags: ["ml", "llm", "training"]
+---
+
+After spending a year training code LLMs for [Mellum](https://huggingface.co/collections/JetBrains/mellum-68120b4ae1423c86a2da007a), here are some scattered notes on what I've learned.
+
+## Data matters more than you think
+
+Everyone says this, but it's really true. We spent way more time on data processing than on model architecture. Some things that helped:
+
+- **Deduplication** — removing near-duplicates at multiple levels (file, function, line)
+- **Quality filtering** — surprisingly hard to define "quality" for code
+- **FIM (Fill-in-the-Middle)** — essential for code completion, but the format matters
+
+## Architecture trade-offs
+
+When you're optimizing for serving latency and memory, you have to make choices:
+
+```python
+# Simplified view of the trade-offs
+{
+    "GQA": "fewer KV heads = smaller cache",
+    "MLA": "even smaller cache, but more complex",
+    "Sliding window": "bounded memory, but limited context",
+}
+```
+
+There's no free lunch. Everything is a trade-off between quality, speed, and memory.
+
+## Things that break at scale
+
+Distributed training on 512 GPUs is a different beast from training on 8:
+
+- Network failures become common
+- Gradient synchronization bugs are subtle
+- Checkpointing takes forever and can fail
+- Monitoring becomes critical
+
+## One more thing
+
+If you're training models, invest in your evaluation suite early. It's the only way to know if you're making progress or just moving sideways.
+
+More detailed posts on specific topics coming soon.
