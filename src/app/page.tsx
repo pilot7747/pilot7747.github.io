@@ -7,12 +7,10 @@ import { formatDate, getAllPosts, transitionName } from "@/lib/posts";
 import {
   education,
   experience,
-  focus,
   highlights,
   publications,
   site,
   socials,
-  stats,
   toolbox,
   type Publication,
 } from "@/lib/site";
@@ -111,56 +109,18 @@ export default function Home() {
                 </a>
               ))}
           </div>
-
-          <dl className="rise mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4" style={{ ["--i" as string]: 4 }}>
-            {stats.map((s) => (
-              <div key={s.value} className="bg-bg px-5 py-5">
-                <dt className="sr-only">{s.label}</dt>
-                <dd>
-                  <span className="block font-serif text-[1.75rem] leading-none tracking-tight tabular-nums md:text-[2rem]">{s.value}</span>
-                  <span className="mt-2 block text-[0.8125rem] leading-snug text-fg-muted">{s.label}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
         </section>
 
         {/* -------------------------------------------------------------- figure */}
         <div className="container-page pb-20 md:pb-28">
-          <div className="rise" style={{ ["--i" as string]: 5 }}>
+          <div className="rise" style={{ ["--i" as string]: 4 }}>
             <TrainingCurve />
           </div>
         </div>
 
         <div className="container-page space-y-20 md:space-y-28">
-          {/* -------------------------------------------------------------- now */}
-          <Section id="now" index="01" title="Now" aside="What I'm working on and thinking about.">
-            <div className="max-w-2xl space-y-8">
-              <p className="font-serif text-[1.375rem] leading-snug tracking-tight md:text-2xl">
-                At Cohere I work on pre-training. The questions I keep coming back to are about how to spend compute
-                before the big run, so the big run doesn&apos;t surprise you.
-              </p>
-              <ul className="space-y-2.5">
-                {focus.map((item) => (
-                  <li key={item} className="flex gap-3 text-fg-muted">
-                    <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <dl className="grid gap-x-6 gap-y-3 border-t border-line pt-6 text-sm sm:grid-cols-[8rem_1fr]">
-                {toolbox.map((row) => (
-                  <div key={row.label} className="contents">
-                    <dt className="font-mono text-xs uppercase tracking-wider text-fg-subtle sm:pt-0.5">{row.label}</dt>
-                    <dd className="text-fg-muted">{row.items}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </Section>
-
           {/* ------------------------------------------------------------- work */}
-          <Section id="work" index="02" title="Selected work">
+          <Section id="work" index="01" title="Selected work">
             <div className="grid gap-4 sm:grid-cols-2">
               {highlights.map((h) => (
                 <article
@@ -189,7 +149,7 @@ export default function Home() {
           </Section>
 
           {/* ------------------------------------------------------- experience */}
-          <Section id="experience" index="03" title="Experience">
+          <Section id="experience" index="02" title="Experience">
             <ol className="relative space-y-10 border-l border-line pl-6 md:pl-8">
               {experience.map((job) => (
                 <li key={job.id} id={job.id} className="relative">
@@ -223,14 +183,16 @@ export default function Home() {
                     <p className="text-[0.9375rem] text-fg">{job.role}</p>
                     <p className="hidden shrink-0 text-sm text-fg-subtle sm:block">{job.location}</p>
                   </div>
-                  <ul className="mt-3 space-y-2 text-[0.9375rem] leading-relaxed text-fg-muted">
-                    {job.points.map((point) => (
-                      <li key={point} className="flex gap-3">
-                        <span aria-hidden className="mt-[0.75em] h-px w-2 shrink-0 bg-fg-subtle" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {job.points.length > 0 && (
+                    <ul className="mt-3 space-y-2 text-[0.9375rem] leading-relaxed text-fg-muted">
+                      {job.points.map((point) => (
+                        <li key={point} className="flex gap-3">
+                          <span aria-hidden className="mt-[0.75em] h-px w-2 shrink-0 bg-fg-subtle" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ol>
@@ -248,13 +210,22 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              <p className="eyebrow mt-8">Toolbox</p>
+              <dl className="mt-4 grid gap-x-6 gap-y-2 text-sm sm:grid-cols-[8rem_1fr]">
+                {toolbox.map((row) => (
+                  <div key={row.label} className="contents">
+                    <dt className="text-fg">{row.label}</dt>
+                    <dd className="text-fg-muted">{row.items}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </Section>
 
           {/* ----------------------------------------------------- publications */}
           <Section
             id="publications"
-            index="04"
+            index="03"
             title="Publications"
             aside={
               <a href={site.links.scholar} className="inline-flex items-center gap-1 link-underline hover:text-fg">
@@ -272,7 +243,7 @@ export default function Home() {
           {/* ---------------------------------------------------------- writing */}
           <Section
             id="writing"
-            index="05"
+            index="04"
             title="Writing"
             aside={
               <Link href="/blog" transitionTypes={["nav-forward"]} className="inline-flex items-center gap-1 link-underline hover:text-fg">
@@ -308,7 +279,7 @@ export default function Home() {
           </Section>
 
           {/* ---------------------------------------------------------- contact */}
-          <Section id="contact" index="06" title="Contact">
+          <Section id="contact" index="05" title="Contact">
             <div className="max-w-2xl">
               <p className="text-fg-muted">
                 Email is the best way to reach me. I&apos;m always happy to talk about pre-training data, evals, and

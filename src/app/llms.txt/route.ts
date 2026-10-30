@@ -15,7 +15,7 @@ export function GET() {
     "",
     "## Experience",
     "",
-    ...experience.map((job) => `- ${job.company}: ${job.role} (${job.period}). ${job.points[0]}`),
+    ...experience.map((job) => `- ${job.company}: ${job.role} (${job.period}).${job.points[0] ? ` ${job.points[0]}` : ""}`),
     "",
     "## Selected work",
     "",

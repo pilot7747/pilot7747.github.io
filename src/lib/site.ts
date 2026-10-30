@@ -27,20 +27,6 @@ export const socials = [
   { label: "LinkedIn", href: site.links.linkedin },
 ] as const;
 
-export const stats = [
-  { value: "12B", label: "MoE code LLM I led pre-training for" },
-  { value: "512×H200", label: "distributed training runs" },
-  { value: "10 TB+", label: "training data pipeline" },
-  { value: "1M+", label: "Mellum downloads on Hugging Face" },
-] as const;
-
-export const focus = [
-  "Pre-training data: mixtures, filtering, dedup, synthetic data",
-  "Ablations and scaling experiments that transfer to the big run",
-  "Architecture for serving cost: GQA, MLA, sliding-window attention, MoE",
-  "RL with verifiable rewards for code, math and agents",
-] as const;
-
 export const toolbox = [
   { label: "Languages", items: "Python, C++, Rust, Bash" },
   { label: "Training", items: "PyTorch, multi-node mixed precision, MoE, LLM evaluation" },
@@ -117,7 +103,7 @@ export const experience: Experience[] = [
     location: "Berlin · remote",
     href: "https://cohere.com",
     current: true,
-    points: ["Pre-training research on the Foundations team."],
+    points: [],
   },
   {
     id: "jetbrains",
@@ -275,5 +261,5 @@ export const checkpoints: Checkpoint[] = [
   { t: 2020.7, date: "2020", title: "Toloka AI", note: "Crowdsourcing, evaluation, RLHF", spike: 0.4 },
   { t: 2024.2, date: "2024", title: "JetBrains", note: "Leading Mellum code LLMs", spike: 0.45 },
   { t: 2026.4, date: "2026", title: "Mellum2", note: "12B MoE, open weights" },
-  { t: 2026.84, date: "Nov 2026", title: "Cohere", note: "Pre-training, Foundations" },
+  { t: 2026.84, date: "Nov 2026", title: "Cohere", note: "Foundations team" },
 ];
