@@ -1,199 +1,374 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { ViewTransition } from "react";
+import { ArrowUpRight, Section } from "@/components/section";
+import { TrainingCurve } from "@/components/training-curve";
+import { formatDate, getAllPosts, transitionName } from "@/lib/posts";
+import {
+  education,
+  experience,
+  focus,
+  highlights,
+  publications,
+  site,
+  socials,
+  stats,
+  toolbox,
+  type Publication,
+} from "@/lib/site";
 
-const experiences = [
-  {
-    company: "JetBrains AI",
-    role: "Staff Research Engineer / Team Lead",
-    period: "Mar 2024 – Present",
-    location: "Berlin, Germany",
-    description: "Leading development of Mellum, an open-source code LLM family. Training billion-parameter models on 512×H200 GPUs.",
-  },
-  {
-    company: "Yandex",
-    role: "AI Research Scientist",
-    period: "Sep 2020 – Mar 2024",
-    location: "Belgrade, Serbia",
-    description: "Deep learning research for Toloka AI. Led alignment (SFT/RLHF) for LLM training. 6 publications at NeurIPS, SIGIR, HCOMP.",
-  },
-  {
-    company: "MIPT & Inria NANO-D",
-    role: "Research Intern",
-    period: "Mar 2020 – Sep 2020",
-    location: "Moscow / Grenoble",
-    description: "Developed S-GCN for protein quality prediction. Achieved state-of-the-art on CASP MQA challenge.",
-  },
-  {
-    company: "Yandex",
-    role: "ML/SWE Intern",
-    period: "2018 – 2019",
-    location: "Moscow, Russia",
-    description: "Built ML models for video ranking. Improved search anti-spam systems performance by 5%.",
-  },
-];
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
-const publications = [
-  {
-    title: "Mellum: Open-Source Code LLMs",
-    venue: "HuggingFace, 2024",
-    link: "https://huggingface.co/collections/JetBrains/mellum-68120b4ae1423c86a2da007a",
-  },
-  {
-    title: "Best Prompts for Text-to-Image Models",
-    venue: "SIGIR 2023",
-    link: "https://dl.acm.org/doi/10.1145/3539618.3592000",
-  },
-  {
-    title: "CrowdSpeech and Vox DIY",
-    venue: "NeurIPS Datasets Track 2021",
-    link: "https://zenodo.org/record/8186168",
-  },
-  {
-    title: "S-GCN for Protein Model Quality Assessment",
-    venue: "ML: Science and Technology 2021",
-    link: "https://iopscience.iop.org/article/10.1088/2632-2153/abf856",
-  },
-];
-
-const skills = [
-  "Python", "C++", "Rust", "PyTorch", "Distributed Training",
-  "LLMs", "RLHF", "NLP", "Computer Vision", "Kubernetes"
-];
+const pageTransition = {
+  enter: { "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" },
+  exit: { "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" },
+} as const;
 
 export default function Home() {
+  const posts = getAllPosts().slice(0, 3);
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    url: site.url,
+    email: `mailto:${site.email}`,
+    jobTitle: site.role,
+    worksFor: { "@type": "Organization", name: site.company, url: site.companyUrl },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "Moscow Institute of Physics and Technology" },
+    homeLocation: { "@type": "Place", name: site.location },
+    knowsAbout: ["Large language models", "LLM pre-training", "Machine learning", "RLHF", "Code generation"],
+    sameAs: Object.values(site.links),
+  };
+
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      {/* Hero Section */}
-      <section className="mb-16">
-        <div className="font-mono text-accent-secondary mb-2">
-          <span className="text-accent">$</span> whoami
-        </div>
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 cursor-blink">
-          Nikita Pavlichenko
-        </h1>
-        <p className="text-xl text-accent-secondary mb-6">
-          Staff Research Engineer / Team Lead @ JetBrains AI
-        </p>
-        <p className="text-lg leading-relaxed max-w-2xl">
-          I build and train large language models for code. Currently leading the development of{" "}
-          <a 
-            href="https://huggingface.co/collections/JetBrains/mellum-68120b4ae1423c86a2da007a"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            Mellum
-          </a>
-          , an open-source code LLM family. Previously at Yandex, working on crowdsourcing and AI research.
-        </p>
-      </section>
+    <ViewTransition {...pageTransition} default="none">
+      <div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+        />
 
-      {/* Experience Section */}
-      <section className="mb-16">
-        <div className="font-mono text-accent-secondary mb-6">
-          <span className="text-accent">$</span> cat experience.json
-        </div>
-        <div className="space-y-6">
-          {experiences.map((exp, index) => (
-            <div 
-              key={index}
-              className="border border-border rounded-lg p-6 bg-card-bg hover:border-accent-secondary transition-colors"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                <div>
-                  <h3 className="text-lg font-semibold">{exp.company}</h3>
-                  <p className="text-accent">{exp.role}</p>
-                </div>
-                <div className="text-sm text-accent-secondary font-mono text-right">
-                  <div>{exp.period}</div>
-                  <div>{exp.location}</div>
-                </div>
-              </div>
-              <p className="text-accent-secondary">{exp.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Education Section */}
-      <section className="mb-16">
-        <div className="font-mono text-accent-secondary mb-6">
-          <span className="text-accent">$</span> cat education.md
-        </div>
-        <div className="border border-border rounded-lg p-6 bg-card-bg">
-          <h3 className="text-lg font-semibold mb-1">Moscow Institute of Physics and Technology</h3>
-          <p className="text-accent mb-4">MSc & BSc in Computer Science</p>
-          <p className="text-accent-secondary">
-            Graduated 2023. Focus on machine learning and algorithms.
-          </p>
-        </div>
-      </section>
-
-      {/* Publications Section */}
-      <section className="mb-16">
-        <div className="font-mono text-accent-secondary mb-6">
-          <span className="text-accent">$</span> ls publications/ | head -4
-        </div>
-        <div className="grid gap-4">
-          {publications.map((pub, index) => (
-            <a
-              key={index}
-              href={pub.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-border rounded-lg p-4 bg-card-bg hover:border-accent transition-colors block"
-            >
-              <h3 className="font-medium mb-1">{pub.title}</h3>
-              <p className="text-sm text-accent-secondary font-mono">{pub.venue}</p>
-            </a>
-          ))}
-        </div>
-        <p className="text-sm text-accent-secondary mt-4 font-mono">
-          + more on{" "}
-          <a 
-            href="https://scholar.google.com/citations?user=2mSLYhcAAAAJ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline"
-          >
-            Google Scholar
-          </a>
-        </p>
-      </section>
-
-      {/* Skills Section */}
-      <section className="mb-16">
-        <div className="font-mono text-accent-secondary mb-6">
-          <span className="text-accent">$</span> echo $SKILLS
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {skills.map((skill, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-card-bg border border-border rounded-md text-sm font-mono"
-            >
-              {skill}
+        {/* ---------------------------------------------------------------- hero */}
+        <section className="container-page pb-14 pt-16 md:pb-20 md:pt-24">
+          <p className="rise eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span className="inline-flex items-center gap-2 text-fg">
+              <span className="relative flex size-2">
+                <span className="absolute inset-0 rounded-full bg-accent motion-safe:animate-ping motion-safe:[animation-duration:2.4s]" />
+                <span className="relative size-2 rounded-full bg-accent" />
+              </span>
+              {site.company} · {site.team}
             </span>
-          ))}
-        </div>
-      </section>
-
-      {/* Blog Teaser */}
-      <section>
-        <div className="font-mono text-accent-secondary mb-6">
-          <span className="text-accent">$</span> ls blog/
-        </div>
-        <div className="border border-border rounded-lg p-6 bg-card-bg">
-          <p className="text-accent-secondary mb-4">
-            I occasionally write about ML, engineering, and random thoughts.
+            <span className="text-fg-subtle">/</span>
+            <span>LLM pre-training</span>
+            <span className="text-fg-subtle max-sm:hidden">/</span>
+            <span className="max-sm:hidden">{site.location}</span>
           </p>
-          <Link 
-            href="/blog"
-            className="inline-flex items-center gap-2 text-accent hover:underline font-mono"
+
+          <h1
+            className="rise mt-7 max-w-[17ch] font-serif text-[clamp(2.6rem,1.4rem+5.4vw,5.75rem)] font-[420] leading-[1.02] tracking-[-0.025em]"
+            style={{ ["--i" as string]: 1 }}
           >
-            cd blog/ <span className="text-accent-secondary">→</span>
-          </Link>
+            I pre-train language models, and mostly work on{" "}
+            <em className="text-accent-ink">what goes into them.</em>
+          </h1>
+
+          <div className="rise mt-8 max-w-2xl space-y-4 text-[1.0625rem] leading-relaxed text-fg-muted md:text-lg" style={{ ["--i" as string]: 2 }}>
+            <p>
+              I&apos;m <span className="text-fg">{site.name}</span>, a {site.role} on the {site.team} team at{" "}
+              <a href={site.companyUrl} className="link-underline text-fg">
+                {site.company}
+              </a>
+              . Before that I spent two and a half years at JetBrains leading{" "}
+              <a href="https://www.jetbrains.com/mellum/" className="link-underline text-fg">
+                Mellum
+              </a>
+              , an open family of code LLMs: from the data pipeline, to training runs on 512 GPUs, to code completion that
+              hundreds of thousands of developers use every month.
+            </p>
+            <p>Earlier, I did research on crowdsourcing, evaluation and RLHF at Yandex and Toloka AI.</p>
+          </div>
+
+          <div className="rise mt-9 flex flex-wrap items-center gap-3" style={{ ["--i" as string]: 3 }}>
+            <a
+              href={`mailto:${site.email}`}
+              className="inline-flex h-10 items-center gap-2 rounded-full bg-fg px-5 text-sm font-medium text-bg transition-[opacity,translate] hover:opacity-90 active:translate-y-px"
+            >
+              Get in touch
+            </a>
+            {socials
+              .filter((s) => s.label !== "Email")
+              .map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line px-4 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+                >
+                  {s.label}
+                  <ArrowUpRight className="size-3 opacity-60" />
+                </a>
+              ))}
+          </div>
+
+          <dl className="rise mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4" style={{ ["--i" as string]: 4 }}>
+            {stats.map((s) => (
+              <div key={s.value} className="bg-bg px-5 py-5">
+                <dt className="sr-only">{s.label}</dt>
+                <dd>
+                  <span className="block font-serif text-[1.75rem] leading-none tracking-tight tabular-nums md:text-[2rem]">{s.value}</span>
+                  <span className="mt-2 block text-[0.8125rem] leading-snug text-fg-muted">{s.label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* -------------------------------------------------------------- figure */}
+        <div className="container-page pb-20 md:pb-28">
+          <div className="rise" style={{ ["--i" as string]: 5 }}>
+            <TrainingCurve />
+          </div>
         </div>
-      </section>
-    </div>
+
+        <div className="container-page space-y-20 md:space-y-28">
+          {/* -------------------------------------------------------------- now */}
+          <Section id="now" index="01" title="Now" aside="What I'm working on and thinking about.">
+            <div className="max-w-2xl space-y-8">
+              <p className="font-serif text-[1.375rem] leading-snug tracking-tight md:text-2xl">
+                At Cohere I work on pre-training. The questions I keep coming back to are about how to spend compute
+                before the big run, so the big run doesn&apos;t surprise you.
+              </p>
+              <ul className="space-y-2.5">
+                {focus.map((item) => (
+                  <li key={item} className="flex gap-3 text-fg-muted">
+                    <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <dl className="grid gap-x-6 gap-y-3 border-t border-line pt-6 text-sm sm:grid-cols-[8rem_1fr]">
+                {toolbox.map((row) => (
+                  <div key={row.label} className="contents">
+                    <dt className="font-mono text-xs uppercase tracking-wider text-fg-subtle sm:pt-0.5">{row.label}</dt>
+                    <dd className="text-fg-muted">{row.items}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </Section>
+
+          {/* ------------------------------------------------------------- work */}
+          <Section id="work" index="02" title="Selected work">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {highlights.map((h) => (
+                <article
+                  key={h.title}
+                  className="group relative flex flex-col rounded-xl border border-line p-6 transition-[border-color,background-color] duration-200 hover:border-line-strong hover:bg-bg-elev"
+                >
+                  <div className="flex items-baseline justify-between gap-4">
+                    <p className="eyebrow">{h.kicker}</p>
+                    <p className="font-mono text-xs text-fg-subtle">{h.year}</p>
+                  </div>
+                  <h3 className="mt-4 font-serif text-[1.625rem] leading-tight tracking-tight">{h.title}</h3>
+                  <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-fg-muted">{h.body}</p>
+                  {h.links.length > 0 && (
+                    <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                      {h.links.map((l) => (
+                        <a key={l.href} href={l.href} className="inline-flex items-center gap-1 text-accent-ink hover:underline hover:underline-offset-4">
+                          {l.label}
+                          <ArrowUpRight />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </Section>
+
+          {/* ------------------------------------------------------- experience */}
+          <Section id="experience" index="03" title="Experience">
+            <ol className="relative space-y-10 border-l border-line pl-6 md:pl-8">
+              {experience.map((job) => (
+                <li key={job.id} id={job.id} className="relative">
+                  <span
+                    aria-hidden
+                    className={`absolute -left-[calc(1.5rem+4.5px)] top-2 size-2 rounded-full ring-4 ring-bg md:-left-[calc(2rem+4.5px)] ${
+                      job.current ? "bg-accent" : "bg-line-strong"
+                    }`}
+                  />
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                    <h3 className="font-serif text-[1.375rem] leading-tight tracking-tight">
+                      {job.href ? (
+                        <a href={job.href} className="link-underline decoration-transparent hover:decoration-current">
+                          {job.company}
+                        </a>
+                      ) : (
+                        job.company
+                      )}
+                      {job.current && (
+                        <span className="ml-3 inline-block translate-y-[-0.2em] rounded-full bg-accent-soft px-2 py-0.5 align-middle font-sans text-[0.6875rem] font-medium text-accent-ink">
+                          Current
+                        </span>
+                      )}
+                    </h3>
+                    <p className="shrink-0 font-mono text-xs text-fg-muted">
+                      {job.period}
+                      <span className="sm:hidden"> · {job.location}</span>
+                    </p>
+                  </div>
+                  <div className="mt-1 flex items-baseline justify-between gap-6">
+                    <p className="text-[0.9375rem] text-fg">{job.role}</p>
+                    <p className="hidden shrink-0 text-sm text-fg-subtle sm:block">{job.location}</p>
+                  </div>
+                  <ul className="mt-3 space-y-2 text-[0.9375rem] leading-relaxed text-fg-muted">
+                    {job.points.map((point) => (
+                      <li key={point} className="flex gap-3">
+                        <span aria-hidden className="mt-[0.75em] h-px w-2 shrink-0 bg-fg-subtle" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-12 rounded-xl border border-line p-6">
+              <p className="eyebrow">Education</p>
+              <ul className="mt-4 space-y-3">
+                {education.map((e) => (
+                  <li key={e.degree} className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                    <span>
+                      <span className="text-fg">{e.degree}</span>
+                      <span className="text-fg-muted"> · {e.school}</span>
+                    </span>
+                    <span className="shrink-0 font-mono text-xs text-fg-muted">{e.period}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Section>
+
+          {/* ----------------------------------------------------- publications */}
+          <Section
+            id="publications"
+            index="04"
+            title="Publications"
+            aside={
+              <a href={site.links.scholar} className="inline-flex items-center gap-1 link-underline hover:text-fg">
+                Google Scholar <ArrowUpRight className="size-3" />
+              </a>
+            }
+          >
+            <PublicationList items={publications} />
+            <p className="mt-10 border-t border-line pt-6 text-sm text-fg-muted">
+              <span className="eyebrow mr-3">Talks</span>
+              Tutorial on reinforcement learning from human feedback, ICML 2023.
+            </p>
+          </Section>
+
+          {/* ---------------------------------------------------------- writing */}
+          <Section
+            id="writing"
+            index="05"
+            title="Writing"
+            aside={
+              <Link href="/blog" transitionTypes={["nav-forward"]} className="inline-flex items-center gap-1 link-underline hover:text-fg">
+                All posts →
+              </Link>
+            }
+          >
+            {posts.length === 0 ? (
+              <p className="text-fg-muted">Nothing here yet.</p>
+            ) : (
+              <ul className="divide-y divide-line border-y border-line">
+                {posts.map((post) => (
+                  <li key={post.slug}>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      transitionTypes={["nav-forward"]}
+                      className="group grid gap-1 py-5 sm:grid-cols-[6.5rem_1fr] sm:gap-6"
+                    >
+                      <time dateTime={post.date} className="font-mono text-xs text-fg-muted sm:pt-1.5">
+                        {formatDate(post.date, "medium")}
+                      </time>
+                      <div>
+                        <ViewTransition name={transitionName(post.slug)} share="morph" default="none">
+                          <h3 className="w-fit font-serif text-xl tracking-tight transition-colors group-hover:text-accent-ink">{post.title}</h3>
+                        </ViewTransition>
+                        {post.description && <p className="mt-1 text-[0.9375rem] text-fg-muted">{post.description}</p>}
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Section>
+
+          {/* ---------------------------------------------------------- contact */}
+          <Section id="contact" index="06" title="Contact">
+            <div className="max-w-2xl">
+              <p className="text-fg-muted">
+                Email is the best way to reach me. I&apos;m always happy to talk about pre-training data, evals, and
+                making experiments cheaper.
+              </p>
+              <a
+                href={`mailto:${site.email}`}
+                className="group mt-6 inline-flex max-w-full items-center gap-3 font-serif text-[clamp(1.35rem,0.9rem+2.2vw,2.5rem)] tracking-tight"
+              >
+                <span className="truncate border-b border-line-strong pb-1 transition-colors group-hover:border-accent group-hover:text-accent-ink">
+                  {site.email}
+                </span>
+                <ArrowUpRight className="size-6 shrink-0 text-fg-subtle transition-[translate,color] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-ink" />
+              </a>
+            </div>
+          </Section>
+        </div>
+      </div>
+    </ViewTransition>
+  );
+}
+
+function Authors({ value }: { value: string }) {
+  const [before, after] = value.split("N. Pavlichenko");
+  if (after === undefined) return <>{value}</>;
+  return (
+    <>
+      {before}
+      <span className="text-fg">N. Pavlichenko</span>
+      {after}
+    </>
+  );
+}
+
+function PublicationList({ items }: { items: Publication[] }) {
+  return (
+    <ol className="space-y-7">
+      {items.map((p, i) => (
+        <li key={p.title} className="grid grid-cols-[2.25rem_1fr] gap-x-2">
+          <span className="pt-1 font-mono text-xs text-fg-subtle">[{items.length - i}]</span>
+          <div>
+            <h3 className="font-serif text-[1.1875rem] leading-snug tracking-tight">
+              {p.href ? (
+                <a href={p.href} className="link-underline decoration-transparent hover:text-accent-ink hover:decoration-current">
+                  {p.title}
+                </a>
+              ) : (
+                p.title
+              )}
+            </h3>
+            <p className="mt-1 text-sm leading-relaxed text-fg-muted">
+              <Authors value={p.authors} />
+            </p>
+            <p className="mt-1.5 flex flex-wrap items-center gap-x-2 font-mono text-xs text-fg-muted">
+              <span>{p.venue}</span>
+              {p.year && <span className="text-fg-subtle">· {p.year}</span>}
+            </p>
+          </div>
+        </li>
+      ))}
+    </ol>
   );
 }
