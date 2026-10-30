@@ -45,7 +45,7 @@ export default async function PostPage({ params }: Params) {
   const index = posts.findIndex((p) => p.slug === post.slug);
   const newer = posts[index - 1];
   const older = posts[index + 1];
-  const toc = post.headings.filter((h) => h.depth === 2);
+  const toc = post.headings;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -68,7 +68,7 @@ export default async function PostPage({ params }: Params) {
       <article className="container-page pt-12 md:pt-16">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
 
-        <div className="grid gap-x-12 lg:grid-cols-[11rem_minmax(0,1fr)]">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-x-12 lg:grid-cols-[11rem_minmax(0,1fr)]">
           <div className="no-print">
             <Link
               href="/blog"
@@ -99,13 +99,16 @@ export default async function PostPage({ params }: Params) {
           </header>
 
           <aside className="no-print hidden lg:block">
-            {toc.length >= 2 && (
+            {toc.filter((h) => h.depth === 2).length >= 2 && (
               <nav aria-label="On this page" className="sticky top-24 mt-14">
                 <p className="eyebrow">On this page</p>
                 <ol className="mt-3 space-y-2 border-l border-line text-[0.8125rem] leading-snug">
                   {toc.map((h) => (
                     <li key={h.id}>
-                      <a href={`#${h.id}`} className="-ml-px block border-l border-transparent pl-3 text-fg-muted transition-colors hover:border-accent hover:text-fg">
+                      <a
+                        href={`#${h.id}`}
+                        className={`-ml-px block border-l border-transparent text-fg-muted transition-colors hover:border-accent hover:text-fg ${h.depth === 3 ? "pl-6 text-xs" : "pl-3"}`}
+                      >
                         {h.text}
                       </a>
                     </li>

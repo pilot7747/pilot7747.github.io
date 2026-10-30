@@ -1,0 +1,14 @@
+# The final model: the candidate with its dense FFN moved to the last layer.
+# Shown at d=1024 (16 layers), matching the architecture in x_post.md.
+use m2026_hybrid
+d_model = 1024
+
+global = fr_global(kv_conv_size=4)
+group = fr_layer(hy_delta)^3 fr_layer(global(v=$v1))
+last = fr_layer(hy_delta)^3 fr_layer(global(v=$v1), fr_dense)
+final = embed
+        fr_layer(hy_delta)^3 fr_layer(global(v=@v1))
+        group^(layers // 4 - 2) last
+        fr_norm @h fr_out hy_mtp
+model = final
+residual = hc(expansion=4)

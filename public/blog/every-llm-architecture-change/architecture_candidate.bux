@@ -1,0 +1,12 @@
+# The candidate: the hybrid with HC, a value residual and a 4-tap KV conv.
+# The dense FFN stays in the first layer. Shown at d=1024 (16 layers).
+use m2026_hybrid
+d_model = 1024
+
+global = fr_global(kv_conv_size=4)
+candidate = embed
+            fr_layer(hy_delta, fr_dense) fr_layer(hy_delta)^2 fr_layer(global(v=@v1))
+            (fr_layer(hy_delta)^3 fr_layer(global(v=$v1)))^(layers // 4 - 1)
+            fr_norm @h fr_out hy_mtp
+model = candidate
+residual = hc(expansion=4)

@@ -15,7 +15,7 @@ const prettyCode: PrettyCodeOptions = {
 
 type Props<T extends keyof React.JSX.IntrinsicElements> = React.ComponentPropsWithoutRef<T>;
 
-function heading(Tag: "h2" | "h3") {
+function heading(Tag: "h2" | "h3" | "h4") {
   return function Heading({ id, children, ...props }: Props<"h2">) {
     return (
       <Tag id={id} {...props}>
@@ -33,8 +33,10 @@ function heading(Tag: "h2" | "h3") {
 const components = {
   h2: heading("h2"),
   h3: heading("h3"),
+  h4: heading("h4"),
+  // Links to files (figures, diagram sources) are not routes, so they skip next/link.
   a: ({ href = "", ...props }: Props<"a">) =>
-    href.startsWith("/") ? <Link href={href} {...props} /> : <a href={href} {...props} />,
+    href.startsWith("/") && !/\.\w+$/.test(href) ? <Link href={href} {...props} /> : <a href={href} {...props} />,
   figure: ({ children, ...props }: Props<"figure">) => {
     if (!("data-rehype-pretty-code-figure" in props)) return <figure {...props}>{children}</figure>;
     return (

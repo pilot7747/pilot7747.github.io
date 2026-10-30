@@ -298,7 +298,8 @@
 }
 
 .prose h2,
-.prose h3 {
+.prose h3,
+.prose h4 {
   position: relative;
   font-family: var(--font-serif);
   font-weight: 500;
@@ -316,8 +317,14 @@
   margin-top: 1.8em;
 }
 
+.prose h4 {
+  font-size: 1.05em;
+  margin-top: 1.6em;
+}
+
 .prose h2 + *,
-.prose h3 + * {
+.prose h3 + *,
+.prose h4 + * {
   margin-top: 0.75em;
 }
 
@@ -333,6 +340,7 @@
 
 .prose h2:hover .heading-anchor,
 .prose h3:hover .heading-anchor,
+.prose h4:hover .heading-anchor,
 .prose .heading-anchor:focus-visible {
   opacity: 1;
 }
@@ -410,6 +418,13 @@
   border: 1px solid var(--line);
 }
 
+/* A figure linked to its full-size version sits on its own line, centred. */
+.prose > a:has(> img) {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
 .prose table {
   width: 100%;
   border-collapse: collapse;
@@ -427,6 +442,8 @@
 
 .prose th {
   font-weight: 600;
+  line-height: 1.35;
+  vertical-align: bottom;
   border-bottom-color: var(--line-strong);
 }
 
@@ -437,6 +454,11 @@
   border-radius: 0.3em;
   background: var(--code-bg);
   border: 1px solid var(--line);
+}
+
+/* KaTeX defaults to 1.21em, which towers over the serif body text. */
+.prose .katex {
+  font-size: 1.04em;
 }
 
 .prose .katex-display {
