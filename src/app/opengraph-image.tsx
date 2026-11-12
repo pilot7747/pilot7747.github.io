@@ -7,8 +7,7 @@ export const contentType = "image/png";
 
 export default function Image() {
   return ogImage({
-    eyebrow: `${site.company} · ${site.team} · LLM pre-training`,
-    title: "I pre-train language models, and mostly work on what goes into them.",
+    title: "I pre-train language models.",
     footer: "nikita-pavlichenko.com",
   });
 }

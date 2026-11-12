@@ -51,31 +51,13 @@ export default function Home() {
 
         {/* ---------------------------------------------------------------- hero */}
         <section className="container-page pb-14 pt-16 md:pb-20 md:pt-24">
-          <p className="rise eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
-            <span className="inline-flex items-center gap-2 text-fg">
-              <span className="relative flex size-2">
-                <span className="absolute inset-0 rounded-full bg-accent motion-safe:animate-ping motion-safe:[animation-duration:2.4s]" />
-                <span className="relative size-2 rounded-full bg-accent" />
-              </span>
-              {site.company} · {site.team}
-            </span>
-            <span className="text-fg-subtle">/</span>
-            <span>LLM pre-training</span>
-            <span className="text-fg-subtle max-sm:hidden">/</span>
-            <span className="max-sm:hidden">{site.location}</span>
-          </p>
-
-          <h1
-            className="rise mt-7 max-w-[17ch] font-serif text-[clamp(2.6rem,1.4rem+5.4vw,5.75rem)] font-[420] leading-[1.02] tracking-[-0.025em]"
-            style={{ ["--i" as string]: 1 }}
-          >
-            I pre-train language models, and mostly work on{" "}
-            <em className="text-accent-ink">what goes into them.</em>
+          <h1 className="font-serif text-[clamp(2.4rem,1.6rem+3.6vw,4.25rem)] font-[420] leading-[1.05] tracking-[-0.02em]">
+            I pre-train language models.
           </h1>
 
-          <div className="rise mt-8 max-w-2xl space-y-4 text-[1.0625rem] leading-relaxed text-fg-muted md:text-lg" style={{ ["--i" as string]: 2 }}>
+          <div className="mt-7 max-w-xl space-y-4 text-[1.0625rem] leading-relaxed text-fg-muted md:text-lg">
             <p>
-              I&apos;m <span className="text-fg">{site.name}</span>, a {site.role} on the {site.team} team at{" "}
+              I&apos;m {site.name}, a {site.role} on the {site.team} team at{" "}
               <a href={site.companyUrl} className="link-underline text-fg">
                 {site.company}
               </a>
@@ -83,32 +65,20 @@ export default function Home() {
               <a href="https://www.jetbrains.com/mellum/" className="link-underline text-fg">
                 Mellum
               </a>
-              , an open family of code LLMs: from the data pipeline, to training runs on 512 GPUs, to code completion that
-              hundreds of thousands of developers use every month.
+              , an open family of code LLMs.
             </p>
             <p>Earlier, I did research on crowdsourcing, evaluation and RLHF at Yandex and Toloka AI.</p>
           </div>
 
-          <div className="rise mt-9 flex flex-wrap items-center gap-3" style={{ ["--i" as string]: 3 }}>
-            <a
-              href={`mailto:${site.email}`}
-              className="inline-flex h-10 items-center gap-2 rounded-full bg-fg px-5 text-sm font-medium text-bg transition-[opacity,translate] hover:opacity-90 active:translate-y-px"
-            >
-              Get in touch
-            </a>
-            {socials
-              .filter((s) => s.label !== "Email")
-              .map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  className="inline-flex h-10 items-center gap-1.5 rounded-full border border-line px-4 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
-                >
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[0.9375rem]">
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a href={s.href} className="link-underline text-fg">
                   {s.label}
-                  <ArrowUpRight className="size-3 opacity-60" />
                 </a>
-              ))}
-          </div>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* -------------------------------------------------------------- figure */}
