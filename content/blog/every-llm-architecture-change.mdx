@@ -146,7 +146,7 @@ There are also three models I'll keep referring to:
   experiments. The final model is this one with its dense FFN moved from the first layer
   to the last.
 
-<a href="/blog/every-llm-architecture-change/architecture_reference.svg"><img src="/blog/every-llm-architecture-change/architecture_reference.png" alt="The 2021 reference in bux studio: sixteen pre-norm blocks with RoPE multi-head attention and a GELU MLP" width="281" height="718" /></a>
+<Diagram id="architectureReference" href="/blog/every-llm-architecture-change/architecture_reference.svg" height={718} />
 
 The reference, drawn in bux studio. All four architecture diagrams use $d=1024$ and
 16 decoder blocks. Tokens flow from bottom to top; ×n repeats a block.
@@ -157,7 +157,7 @@ Click any figure to open it at full size.
 
 #### High level overview
 
-<a href="/blog/every-llm-architecture-change/compass.png"><img src="/blog/every-llm-architecture-change/compass.png" alt="Every single change: quality per parameter against serving cost" width="640" height="526" /></a>
+<Chart id="compass" />
 
 Each dot is one change to GPT-3 + RoPE. Further right means better quality per parameter.
 Further up means cheaper to serve, which lets me use a bigger model for the same money.
@@ -195,7 +195,7 @@ serving cost and 1T training tokens:
 
 #### Positional Encodings
 
-<a href="/blog/every-llm-architecture-change/positions.png"><img src="/blog/every-llm-architecture-change/positions.png" alt="Positional encodings" width="640" height="395" /></a>
+<Chart id="positions" />
 
 All rows here are against GPT-3's learned table of positions. Positions don't change the
 serving cost, so there's no serving panel.
@@ -228,11 +228,11 @@ information. The 2026 hybrids do this, and adding partial RoPE back to their glo
 is slightly worse (+0.2%). You gotta have some positional inductive bias, but it doesn't
 need to be in every layer. This part is a quick reproduction of [a known result](https://arxiv.org/abs/2305.19466).
 
-<a href="/blog/every-llm-architecture-change/switch_16k.png"><img src="/blog/every-llm-architecture-change/switch_16k.png" alt="The 16k switch with and without YaRN" width="640" height="377" /></a>
+<Chart id="switch16k" />
 
 #### Normalization
 
-<a href="/blog/every-llm-architecture-change/norms.png"><img src="/blog/every-llm-architecture-change/norms.png" alt="Normalization" width="640" height="487" /></a>
+<Chart id="norms" />
 
 Most of these changes were introduced for speed or stability, and I don't see a quality
 gain from [RMSNorm](https://arxiv.org/abs/1910.07467), removing biases,
@@ -262,11 +262,11 @@ QK-norm also tolerates a higher learning rate well. Going one tested learning ra
 its best barely hurts it. Sandwich norms, gated attention and hyper-connections, on the
 other hand, blow up at 8e-3:
 
-<a href="/blog/every-llm-architecture-change/stability_lrscan.png"><img src="/blog/every-llm-architecture-change/stability_lrscan.png" alt="Learning-rate scans for the stability changes" width="640" height="418" /></a>
+<Chart id="stabilityLr" />
 
 #### MLP Variants
 
-<a href="/blog/every-llm-architecture-change/mlp.png"><img src="/blog/every-llm-architecture-change/mlp.png" alt="MLP variants" width="640" height="175" /></a>
+<Chart id="mlp" />
 
 All three alternatives beat the reference's plain GELU MLP (4x wide) at the same parameter
 count. [SwiGLU](https://arxiv.org/abs/2002.05202) barely helps at $d=512$ (-0.07%), then improves by 0.66% at $d=768$ and 0.92%
@@ -282,7 +282,7 @@ automatically make a good expert. I'd still want a second width before ruling it
 
 #### Softmax Attention Variants
 
-<a href="/blog/every-llm-architecture-change/attention.png"><img src="/blog/every-llm-architecture-change/attention.png" alt="Softmax attention variants" width="640" height="287" /></a>
+<Chart id="attention" />
 
 \* I trained [MLA](https://arxiv.org/abs/2405.04434) with a latent of 256 and 32 rotated dimensions. That runs about 2x slower
 in vLLM than DeepSeek's 512 + 64, which has better kernels, so I used DeepSeek's dimensions
@@ -306,11 +306,11 @@ The context length changes which of these I'd pick. At 16-24k, MQA lets me serve
 biggest model: 33B. At 256k that falls to 8B, and GQA falls from 14B to 6B. Sliding windows,
 KDA and Mamba-2 stay around 14-16B:
 
-<a href="/blog/every-llm-architecture-change/serving_context_attention.png"><img src="/blog/every-llm-architecture-change/serving_context_attention.png" alt="Affordable model size against context" width="640" height="488" /></a>
+<Chart id="servingContext" />
 
 #### Hybrids: SWA vs Linear Attention
 
-<a href="/blog/every-llm-architecture-change/hybrids.png"><img src="/blog/every-llm-architecture-change/hybrids.png" alt="Linear-attention and sliding-window hybrids" width="640" height="377" /></a>
+<Chart id="hybrids" />
 
 Linear attention is kinda meta here. Replacing 3 of 4 attention layers with [KDA](https://arxiv.org/abs/2510.26692) improves
 loss by 3.7%, 3.4% and 3.4% at the trained widths, and lets me serve 3.6x the parameters
@@ -345,7 +345,7 @@ more quality; more on that below.
 
 #### MoE Variants
 
-<a href="/blog/every-llm-architecture-change/moe.png"><img src="/blog/every-llm-architecture-change/moe.png" alt="Mixture-of-experts variants" width="640" height="198" /></a>
+<Chart id="moe" />
 
 Every MoE here uses the same amount of MLP compute per token as the dense model.
 
@@ -401,7 +401,7 @@ Four kinds of short causal convolution show up in this study:
 - **[LFM2's gated short conv](https://arxiv.org/abs/2511.23404):** a whole mixer layer built around a 3-tap conv, in place of
   attention or linear attention.
 
-<a href="/blog/every-llm-architecture-change/shortconv.png"><img src="/blog/every-llm-architecture-change/shortconv.png" alt="Inkling's key-value conv on the 2021 reference" width="640" height="175" /></a>
+<Chart id="shortconv" />
 
 Inkling's key-value conv helps by a small, consistent amount: -1.0%, -0.7% and -0.7% on the
 2021 reference. It also reduces the model size I can serve by about 4%, from 3.7B to 3.5B.
@@ -412,7 +412,7 @@ separate improvements, and -1.2% at equal serving cost. It also helps on the 202
 (-0.7% on the global layers). That's K in the first stacking round, and I keep it in the
 final model.
 
-<a href="/blog/every-llm-architecture-change/canon.png"><img src="/blog/every-llm-architecture-change/canon.png" alt="Canon layers on the candidate" width="640" height="176" /></a>
+<Chart id="canon" />
 
 \* I didn't benchmark Canon-A's inference speed, so its serving cost is an analytic estimate.
 
@@ -428,14 +428,14 @@ verdict on Canon.
 LFM2 uses a short conv as the whole mixer. In bux this is `short_conv`: project the input
 to B, C and u, then compute C · conv(B · u), with 3 taps. I tried it in two places.
 
-<a href="/blog/every-llm-architecture-change/lfm2_ref.png"><img src="/blog/every-llm-architecture-change/lfm2_ref.png" alt="LFM2's short conv as a mixer on the 2021 reference" width="640" height="198" /></a>
+<Chart id="lfm2Ref" />
 
 First, I replaced 3 of 4 attention layers in the 2021 reference, the same way I tested KDA
 and Mamba-2. Loss is 2.1% and 2.3% worse, but serving is very cheap: I can afford 17B
 parameters, compared to KDA's 13.3B. The prediction is -2.7%, about the same as sliding
 windows (-2.8%) and well behind KDA (-4.7%).
 
-<a href="/blog/every-llm-architecture-change/lfm2_cand.png"><img src="/blog/every-llm-architecture-change/lfm2_cand.png" alt="LFM2's short conv in place of the candidate's KDA layers" width="640" height="176" /></a>
+<Chart id="lfm2Cand" />
 
 Then I replaced the candidate's KDA layers. This is much worse: +11.5% at $d=512$, +8.3%
 at $d=768$, and +14% past 8k tokens. It does serve about 1.8x as many sessions per GPU at
@@ -451,7 +451,7 @@ its state.
 
 #### Residual Streams
 
-<a href="/blog/every-llm-architecture-change/residuals.png"><img src="/blog/every-llm-architecture-change/residuals.png" alt="Residual streams" width="640" height="243" /></a>
+<Chart id="residuals" />
 
 \* [mHC](https://arxiv.org/abs/2512.24880) was run at $d=512$ only on the reference, and its serving cost there comes from the
 analytic model. On the 2026 hybrid, where it was measured, mHC allows for 19% fewer parameters than
@@ -479,7 +479,7 @@ The results here are after both fixes.
 
 #### Sparse Attention
 
-<a href="/blog/every-llm-architecture-change/sparse.png"><img src="/blog/every-llm-architecture-change/sparse.png" alt="Sparse attention on the candidate's global layers" width="640" height="250" /></a>
+<Chart id="sparse" />
 
 Here I put sparse attention on the candidate's global layers, one in four. Training and
 quality measurements still stop at 16k. The 64k-256k columns only show how fast the same
@@ -508,11 +508,11 @@ on all three seeds.
 At 175k tokens, DSA's prefill indexer alone took 3.2 seconds. Running dense FP8 attention
 took 2.3 seconds. Choosing which tokens to attend to cost more than the dense attention.
 
-<a href="/blog/every-llm-architecture-change/indexshare_positions.png"><img src="/blog/every-llm-architecture-change/indexshare_positions.png" alt="Index sharing by position in the repository" width="640" height="384" /></a>
+<Chart id="indexshare" />
 
 #### Other (couldn't group)
 
-<a href="/blog/every-llm-architecture-change/other.png"><img src="/blog/every-llm-architecture-change/other.png" alt="Other changes" width="640" height="220" /></a>
+<Chart id="other" />
 
 A few things that didn't fit the sections above:
 
@@ -539,7 +539,7 @@ expert. There's also one MTP module. This already combines many of the changes a
 it's 15.6% better than GPT-3 at $d=512$, and predicted to be 8.5% better at equal serving
 cost.
 
-<a href="/blog/every-llm-architecture-change/architecture_hybrid.svg"><img src="/blog/every-llm-architecture-change/architecture_hybrid.png" alt="The 2026 hybrid in bux studio: three KDA layers per global attention layer, a dense first FFN, routed experts and one MTP module" width="259" height="720" /></a>
+<Diagram id="architectureHybrid" href="/blog/every-llm-architecture-change/architecture_hybrid.svg" height={720} />
 
 The hybrid: the first FFN is dense, and the remaining FFNs use fine-grained MoE.
 [Diagram source](/blog/every-llm-architecture-change/architecture_hybrid.bux).
@@ -559,9 +559,9 @@ balancing the other choices so I could compare models with and without each chan
 That's a fractional factorial design: enough to estimate each change's average effect
 without training all 96 combinations.
 
-<a href="/blog/every-llm-architecture-change/factorial_forest.png"><img src="/blog/every-llm-architecture-change/factorial_forest.png" alt="Average effect of each change in round 1" width="640" height="309" /></a>
+<Chart id="factorial" />
 
-<a href="/blog/every-llm-architecture-change/stack_r1.png"><img src="/blog/every-llm-architecture-change/stack_r1.png" alt="Round 1 at every width" width="640" height="310" /></a>
+<Chart id="stackR1" />
 
 Four options help: HC by 1.8%, AttnRes by 1.1%, K by 0.7% and V by 0.4%. Their gains seem
 to add up; I don't see interactions larger than the noise. F, P and S are worse or make no
@@ -572,7 +572,7 @@ I went with HC + V + K, which is the model I've been calling "the candidate". Ag
 hybrid, it improves loss by 2.6%, 2.2%, 1.9% and 1.8% at $d=512$, $d=768$, $d=1024$ and
 $d=1280$. The improvement barely shrinks at the last width.
 
-<a href="/blog/every-llm-architecture-change/architecture_candidate.svg"><img src="/blog/every-llm-architecture-change/architecture_candidate.png" alt="The candidate in bux studio: the hybrid with four HC residual streams, a value residual from the first global layer and a four-tap KV convolution" width="221" height="718" /></a>
+<Diagram id="architectureCandidate" href="/blog/every-llm-architecture-change/architecture_candidate.svg" height={718} />
 
 The candidate: HC widens the residual stream to four lanes; `v=@v1` saves the first
 global layer's values, and `v=$v1` mixes them into the later global layers. Each
@@ -603,9 +603,9 @@ For round 2, I tried another four changes on the candidate, labeled stack3 in th
 - O: a [norm on the attention heads' outputs](https://arxiv.org/abs/2503.02130);
 - L: a [learned value-residual mix](https://arxiv.org/abs/2410.17897).
 
-<a href="/blog/every-llm-architecture-change/stack_r2.png"><img src="/blog/every-llm-architecture-change/stack_r2.png" alt="Round 2" width="640" height="364" /></a>
+<Chart id="stackR2" />
 
-<a href="/blog/every-llm-architecture-change/shrink.png"><img src="/blog/every-llm-architecture-change/shrink.png" alt="Most $d=512$ wins don't survive one width" width="640" height="500" /></a>
+<Chart id="shrink" />
 
 At $d=512$, all four together look good: -1.2%. At $d=768$, it's -0.1%, basically gone.
 
@@ -629,9 +629,9 @@ ones that helped. I kept the run names in the plots:
 - **stack6:** copy pointer + GatedNorm + value embeddings + learned XSA + differential
   attention.
 
-<a href="/blog/every-llm-architecture-change/stack_r3.png"><img src="/blog/every-llm-architecture-change/stack_r3.png" alt="Round 3" width="640" height="399" /></a>
+<Chart id="stackR3" />
 
-<a href="/blog/every-llm-architecture-change/cplm_rungs.png"><img src="/blog/every-llm-architecture-change/cplm_rungs.png" alt="The copy pointer, alone and with other additions, against the hybrid" width="640" height="449" /></a>
+<Chart id="cplmRungs" />
 
 The copy pointer, [CPLM from modded-nanogpt](https://github.com/KellerJordan/modded-nanogpt/pull/379), gives the biggest improvement among these
 additions at small scale. It adds a "copy" option to the output head, letting the model put
@@ -660,9 +660,9 @@ The candidate also clips 9-11% of its steps at a gradient norm of 1.0, compared 
 for the hybrid. I blamed hyper-connections at first. Then I looked at where the largest
 gradient was coming from: the first layer's dense FFN.
 
-<a href="/blog/every-llm-architecture-change/dense0_gradients.png"><img src="/blog/every-llm-architecture-change/dense0_gradients.png" alt="Gradient norms with the dense layer first, routed, and last" width="600" height="540" /></a>
+<Chart id="dense0Gradients" />
 
-<a href="/blog/every-llm-architecture-change/dense_layer.png"><img src="/blog/every-llm-architecture-change/dense_layer.png" alt="Where the dense layer goes" width="640" height="153" /></a>
+<Chart id="denseLayer" />
 
 Replacing that dense layer with routed experts, like the other layers (dense0), removes
 most of the spikes without changing quality. Moving the dense layer to the end (dense_last)
@@ -693,7 +693,7 @@ almost completely.
 The final model has no $d=1280$ runs in the fit, so I can't tell whether its gain holds at
 that width the way stack5's did.
 
-<a href="/blog/every-llm-architecture-change/architecture_final.svg"><img src="/blog/every-llm-architecture-change/architecture_final.png" alt="The final architecture in bux studio: the candidate with its sole dense SwiGLU FFN in the last decoder block" width="251" height="717" /></a>
+<Diagram id="architectureFinal" href="/blog/every-llm-architecture-change/architecture_final.svg" height={717} />
 
 The final architecture: the dense FFN is now in the last decoder block; all earlier
 FFNs use MoE. HC, the value residual, the KV conv and the MTP module stay the same.
@@ -756,7 +756,7 @@ schedule  = wsd(warmup=0.05, decay=0.2, shape=sqrt)
 loss      = loss(z=1e-4)
 ```
 
-<a href="/blog/every-llm-architecture-change/best_at_target.png"><img src="/blog/every-llm-architecture-change/best_at_target.png" alt="The best models at equal serving cost, against the 2026 hybrid" width="590" height="540" /></a>
+<Chart id="bestAtTarget" />
 
 At first glance, the plot says something else: four models sit above the final one, at
 -1.05% to -1.17%. They are stack5 without a dense layer, stack5 with its dense layer last,
@@ -795,7 +795,7 @@ Most of the improvement was already there in DeepSeek-V3, with fine-grained MoE 
 The 2025-26 changes look much bigger on the small models I trained than at the size I want
 to serve.
 
-<a href="/blog/every-llm-architecture-change/milestones.png"><img src="/blog/every-llm-architecture-change/milestones.png" alt="The milestones, measured and at the target" width="640" height="431" /></a>
+<Chart id="milestones" />
 
 The scaling law leaves the modern model little room to improve through architecture.
 It splits loss into the entropy of the data, a penalty for limited training data, and a
@@ -823,7 +823,7 @@ and KV cache increases code BPB by 0.07% and repository BPB by 0.10%. Pretty sma
 The predicted order also holds when I measure serving at contexts up to 256k. Again,
 quality was only measured at 16k or less:
 
-<a href="/blog/every-llm-architecture-change/context_best.png"><img src="/blog/every-llm-architecture-change/context_best.png" alt="Serving comparison at each context" width="640" height="533" /></a>
+<Chart id="contextBest" />
 
 If you serve long contexts, I'd add one more thing: sparse attention on the global layers.
 The version I'd pick is DSA with GLM-5.2's IndexShare. One global layer in four runs the

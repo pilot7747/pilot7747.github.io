@@ -5,6 +5,8 @@ import rehypePrettyCode, { type Options as PrettyCodeOptions } from "rehype-pret
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
+import { Chart } from "@/components/charts/chart";
+import { Diagram } from "@/components/charts/diagram";
 import { CopyButton } from "@/components/copy-button";
 
 const prettyCode: PrettyCodeOptions = {
@@ -31,6 +33,8 @@ function heading(Tag: "h2" | "h3" | "h4") {
 }
 
 const components = {
+  Chart,
+  Diagram,
   h2: heading("h2"),
   h3: heading("h3"),
   h4: heading("h4"),
