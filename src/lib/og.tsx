@@ -21,7 +21,7 @@ const colors = {
   accent: "#d9572b",
 };
 
-export async function ogImage({ eyebrow, title, footer }: { eyebrow: string; title: string; footer: string }) {
+export async function ogImage({ eyebrow, title, footer }: { eyebrow?: string; title: string; footer: string }) {
   const [serif, serifItalic, mono] = await fonts;
   const curve = buildCurve();
 
@@ -50,10 +50,12 @@ export async function ogImage({ eyebrow, title, footer }: { eyebrow: string; tit
           <path d={curve.smooth} fill="none" stroke={colors.accent} strokeWidth="3" strokeOpacity="0.18" />
         </svg>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 14, fontFamily: "Geist Mono", fontSize: 22, color: colors.muted }}>
-          <div style={{ width: 12, height: 12, borderRadius: 999, background: colors.accent }} />
-          {eyebrow}
-        </div>
+        {eyebrow ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 14, fontFamily: "Geist Mono", fontSize: 22, color: colors.muted }}>
+            <div style={{ width: 12, height: 12, borderRadius: 999, background: colors.accent }} />
+            {eyebrow}
+          </div>
+        ) : null}
 
         <div
           style={{
